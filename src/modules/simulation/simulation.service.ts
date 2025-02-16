@@ -12,6 +12,12 @@ export const getSimulationInput = async (id: number) => {
   });
 };
 
+export const getSimulationOutput = async (id: number) => {
+  return prisma.simulationOutput.findUnique({
+    where: { id },
+  });
+};
+
 export const getSimulationOutputs = async () => {
   return prisma.simulationOutput.findMany();
 };
@@ -39,5 +45,23 @@ export const runSimulation = async (inputId: number) => {
       chargingValuesPerPoint,
       exemplaryDay,
     },
+  });
+};
+
+export const updateSimulationInput = async (id: number, data: { chargePoints?: number, arrivalProbabilityMultiplier?: number, carConsumption?: number, chargePowerPerPoint?: number }) => {
+  return prisma.simulationInput.update({
+    where: { id },
+    data: {
+      ...data,
+    },
+  });
+};
+
+export const deleteSimulationInput = async (id: number) => {
+  await prisma.simulationOutput.deleteMany({
+    where: { simulationInputId: id },
+  });
+  return prisma.simulationInput.delete({
+    where: { id },
   });
 };

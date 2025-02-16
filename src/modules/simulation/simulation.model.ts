@@ -3,7 +3,6 @@ export interface SimulationInputData {
     arrivalProbabilityMultiplier?: number;
     carConsumption?: number;
     chargePowerPerPoint?: number;
-    arrivingCars: number;
   }
   
   export interface SimulationOutputData {

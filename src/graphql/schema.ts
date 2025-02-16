@@ -7,7 +7,6 @@ export const schema = buildSchema(`
         arrivalProbabilityMultiplier: Float!
         carConsumption: Float!
         chargePowerPerPoint: Float!
-        arrivingCars: Int!
         simulationResult: SimulationOutput
     }
 
@@ -24,10 +23,13 @@ export const schema = buildSchema(`
     type Query {
         getSimulationInput(id: Int!): SimulationInput
         getSimulationOutputs: [SimulationOutput]
+        getSimulationOutput(id: Int!): SimulationOutput
     }
 
     type Mutation {
-        createSimulationInput(chargePoints: Int!, arrivalProbabilityMultiplier: Float, carConsumption: Float, chargePowerPerPoint: Float, arrivingCars: Int!): SimulationInput
+        createSimulationInput(chargePoints: Int!, arrivalProbabilityMultiplier: Float, carConsumption: Float, chargePowerPerPoint: Float): SimulationInput
+        updateSimulationInput(id: Int!, chargePoints: Int, arrivalProbabilityMultiplier: Float, carConsumption: Float, chargePowerPerPoint: Float): SimulationInput
         runSimulation(inputId: Int!): SimulationOutput
+        deleteSimulationInput(id: Int!): SimulationInput
     }
 `);

@@ -13,7 +13,6 @@ model SimulationInput {
   arrivalProbabilityMultiplier Float   @default(1.0)
   carConsumption               Float   @default(18.0)
   chargePowerPerPoint          Float   @default(11.0)
-  arrivingCars                 Int
   simulationResult             SimulationOutput?
 }
 
