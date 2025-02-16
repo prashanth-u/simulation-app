@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:15
+    container_name: simulation-db
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: simulation_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: simulation-app
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://user:password@db:5432/simulation_db
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: ["./startup.sh", "npx", "tsx", "src/server.ts"]
+
+volumes:
+  postgres_data:

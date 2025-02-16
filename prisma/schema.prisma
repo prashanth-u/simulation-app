@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SimulationInput {
+  id                           Int     @id @default(autoincrement())
+  chargePoints                 Int
+  arrivalProbabilityMultiplier Float   @default(1.0)
+  carConsumption               Float   @default(18.0)
+  chargePowerPerPoint          Float   @default(11.0)
+  arrivingCars                 Int
+  simulationResult             SimulationOutput?
+}
+
+model SimulationOutput {
+  id                     Int    @id @default(autoincrement())
+  simulationInputId      Int    @unique
+  totalEnergyCharged     Float
+  chargingEvents         Json
+  chargingValuesPerPoint Json
+  exemplaryDay           Json
+  simulationInput        SimulationInput @relation(fields: [simulationInputId], references: [id])
+}
